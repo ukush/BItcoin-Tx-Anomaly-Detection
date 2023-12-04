@@ -259,3 +259,28 @@ CNN
 Autoencoders
 
 Bayesian Networks
+
+
+# Evaluating the Models
+
+Accuracy is not an appropriate metric for evaluating fraud detection models because it does not fully represent the true performance of the model's predictive capabilities. Take for example a dataset consisting of 1000 transactions, 950 of which are legitimate, whilst 50 being fraudulent. A binary classification model that classifies all transactions as legitimate can achieve a accuracy score of 95% for the entire dataset inspite of having an accuracy of 0% for fraudulent transactions!
+
+Two important metrics that provide a better measure of model performance are *precision* and *recall*. Precision describes how accurate the model was when it made a prediction that a data point was positive; measured by the true positives (TP), divided by the TP plus the false positives (FP). 
+Recall is the measure of TP divided by the TP plus the false negatives (FN) - describing how much of the total positive classes the model was able to predict (regardless of how many times it got a prediction wrong).
+
+Depending on the cost, or consequence of getting a prediction wrong (either way), the model should be optimised to produce a high recall or high precision. In cases where the cost of false negatives is very high, meaning classifying a positive class as negative, then recall is the more important metric because missing a potential positive case is worse than mis-identifying negative cases as positive. Optimising for precision on the other hand may be more appropriate in cases when he cost of such failure is low, or to reduce human workload. There are several methods to optimise for precision or recall, the manner in which a threshild is set cn be used to reflect the precision and recall preferences for each specific use case[1].
+
+Another important metric for measuring the performance of fraud detection model is ROC curve (receiver operating characteristic curve). This measures the TP rate divided by the FP rate over many classifying thresholds. ![0_vlaAZ0jKCoihMaI9](https://github.com/ukush/Bitcoin-Tx-Anomaly-Detection/assets/64285005/141f7880-82c8-4306-8a8e-54ee8b412c62). The ROC curve illustrates the trade-off between the recall (TP rate) or how many negative samples the model can correctly identify, and the false positive rate (FP rate) or the rate at which the model incorrectly idetifies a negative sample as being positive, at various thresholds.
+
+Finally, there is the AUC metric, or Area Under the Curve. This provides an aggregate measure of performance across all possible thresholds. The AUC is a single scalar value that quantifies the overall performance of a binary classification model as represented by its ROC curve. ![ROC_AUC_plot](https://github.com/ukush/Bitcoin-Tx-Anomaly-Detection/assets/64285005/85a0410d-5e6a-4ef2-b17c-cb6b8bfec80a)
+
+All of these will be utilised to measure the performance of all my models in this project.
+
+* The AUC gives us an overall, easy to understand metric for evaluating the model's overall performance.
+* The ROC curve gives us a good idea of how well the model can identify the fraudulent transactions. It can also be used to identify the best threshold for maximising labelling of fraudulent transactions, while mimimising mislabelling of legit transacions as fraudulent, which could be used as a threshold in future predictions.
+* The Recall and precision give more detailed understanding of the behaviour of the model and how it is classifying samples. They can be analysed to identify the presence of majoriy bias for example.
+
+For this project, we will say that the cost of missing a fraudulent transaction is moderate/high but not *extremely* high while the cost of mislabelling a legit transaction as fraudulent as relatively low. Why? Because once a Bitcoin transaction is confirmed by the network, it cannot be stopped regardless of whether it is used for fraudulent activity or not. Classification of fraudulent Bitcoin transactions is only useful *after the fact* and so such algorithms would most likely be used as an aid to help in human investigation into fraudulent activities involving Bitcoin, rather than being deployed as a preventative measure. Further, by labelling a legitimate transaction as fraudulent, the sender of the Bitcoin is not affected in any way since the flagging og their transaction is made outside of the Bitcoin network and so as far as theu're concerned, it little difference (unless however as a result they are then put on under further investigation, which is outside of the scope of this project). Therefore the machine learning model should be optimised to favour producing a higher recall score as mislabelling a legit transaction doesn't have as much consequence.  
+
+ # References:
+ [1] Deep Learning for Anomaly Detection (https://ff12.fastforwardlabs.com/)
