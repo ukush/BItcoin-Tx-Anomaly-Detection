@@ -243,7 +243,10 @@ To further add meaningful data which the machine learning model will learn from,
 
 * sat_per_byte (the transaction fee per byte of the transaction - indicates how relatively ‘expensive’ the transaction is)
 
-**Machine learning methods for anomaly detection**
+# Machine learning methods for anomaly detection
+
+## Preliminaries:
+We can see how a simple linear regression model performs with classifying known malicious transactions to get an idea of how well a model may or may not be able to learn from the imbalanced dataset.
 
 **Proposed neural network types**
 
