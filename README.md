@@ -9,32 +9,28 @@ Nevertheless, Bitcoin fraud is still an inevitability. For those who know how to
 Over the last decade, there have been multiple high profile cases of centralised exchanges being hacked, resulting in the leaking of thousands of Bitcoin private keys - which give a user access to their Bitcoin funds. Once leaked, hackers can use these private keys to transfer funds from these addresses to another address, one which only the hackers have the private key for. Since Bitcoin transactions are non-reversible, there is no way for customers to retrieve their funds.
 The aim of this project is to develop a machine learning model which can identify fraudulent Bitcoin transactions.
 
-## Assumptions and goals
-I have been tasked to speicifcally design a model which utlisises a supervised learning approad, therefore I require a *labelled* dataset. Due to the fact that fraudulent transactions are far more rare when compared with legitimate transactions, it is extermely likely that avaiable datasets will be heavilty skewed in favour of legit transactions, where instances of known fraudulent transactions will be very limited in number. This will pose a significant challenge and so steps will need to be taken to address this challenge.
-
 ## Machine Learning Methods
 
-### Anomaly Detection
+#### Anomaly Detection
 Anomaly detection (AD) is a broad technique which aims to identify data points which deviate from the majoriy of the data. AD can be used in the identification of rare events or observations, where features of these events are significantly different from normal instances. Thus, AD has much practical importance due to it's broad applications in defense against cyber-crimes, fraudulent activity and much more. Machine learning models that aim to detect anomalous data points can be of three main types: unsupervised, semi-supervised and supervised. The correct method depends on the availability of labels in the dataset.
 
 Rather than anomaly detection models learning what makes a certain data point abnormal, AD models learn what the 'normal' data points consists of. Consequently, any data points that fall outside of that defined normal, are marked as outliers, or anomalous.
 
-### Fraud Detection
+#### Fraud Detection
 Fraud detection focuses specifically on identiying fraudulent data points or activities, and is particularly applicable for detecting fraudulent network activity or fraudulent transactions as in the case of credit card fraud. Fraud detection can be treated as anomaly detection or a classification problem, again, depending on the characteristics of the dataset and the goal of the machine learning model. This is particularly useful in cases where fraud patterns are evolving and may not be well-defined.
 
-### Binary Classification
+#### Binary Classification
 Binary classification is a machine learning technique where the goal is to categorise data points into one of two classes, or categories. It is a broader concept that can include both anomaly detection and fraud detection, but is not limited to these speciic use cases. Binary classification can only be performed when the data has been clearly labled, with data belonging to either class.
 
-#### Goals of this project
+## Assumptions and goals
+The goal of this project is to explore the various supervised learning methods to tackle the problem of fraud detecction for Bitcoin transactions. Supervised learning models require the data to be labelled and due to the fact that fraudulent transactions are far more rare when compared with legitimate transactions, it is extermely likely that avaiable datasets will be heavilty skewed in favour of legit transactions, where instances of known fraudulent transactions will be very limited in number. This will pose a significant challenge and so steps will need to be taken to address this challenge.
 
-The goal of this project is to explore the various supervised learning methods to tackle the problem of fraud detecction for Bitcoin transactions.
-
-In this project, my approach is as follows:
-1. Treat this as a binary classification problem:
+There are two ways I can approach this problem:
+1. Treat fraud detection as a binary classification problem:
    - Train a binary classifier such as MLP or another form of ANN to predict transactions as either fraudulent or legit using a labelled dataset of known legit and fraud transactions.
    - I can use some other supervised learning model that has been used in literature such as SVM or a simple logistical regression model to compare my neural network to.
 
-2. Treat this task as an anomaly detection problem:
+2. Treat fraud detection as an anomaly detection problem:
    - Using some supervised learning method, train a model to learn what is a 'normal' or legitimate transaction and then feed data into this model. Fradulent transactions should then be identofied as they will differ from the legit transactions in some metric.
    - Can use an autoencoder for this
    - There has been research into Graph Neural Networks (GNN) so could explore that
@@ -233,23 +229,6 @@ To further add meaningful data which the machine learning model will learn from,
 
 * sat_per_byte (the transaction fee per byte of the transaction - indicates how relatively ‘expensive’ the transaction is)
 
-# Machine learning methods for anomaly detection
-
-## Preliminaries:
-We can see how a simple linear regression model performs with classifying known malicious transactions to get an idea of how well a model may or may not be able to learn from the imbalanced dataset.
-
-**Proposed neural network types**
-
-MLP
-
-DNN
-
-CNN
-
-Autoencoders
-
-Bayesian Networks
-
 ## Evaluating the Models
 
 Accuracy is not an appropriate metric for evaluating fraud detection models because it does not fully represent the true performance of the model's predictive capabilities. Take for example a dataset consisting of 1000 transactions, 950 of which are legitimate, whilst 50 being fraudulent. A binary classification model that classifies all transactions as legitimate can achieve a accuracy score of 95% for the entire dataset inspite of having an accuracy of 0% for fraudulent transactions!
@@ -270,6 +249,16 @@ All of these will be utilised to measure the performance of all my models in thi
 * The Recall and precision give more detailed understanding of the behaviour of the model and how it is classifying samples. They can be analysed to identify the presence of majoriy bias for example.
 
 For this project, we will say that the cost of missing a fraudulent transaction is moderate/high but not *extremely* high while the cost of mislabelling a legit transaction as fraudulent as relatively low. Why? Because once a Bitcoin transaction is confirmed by the network, it cannot be stopped regardless of whether it is used for fraudulent activity or not. Classification of fraudulent Bitcoin transactions is only useful *after the fact* and so such algorithms would most likely be used as an aid to help in human investigation into fraudulent activities involving Bitcoin, rather than being deployed as a preventative measure. Further, by labelling a legitimate transaction as fraudulent, the sender of the Bitcoin is not affected in any way since the flagging og their transaction is made outside of the Bitcoin network and so as far as theu're concerned, it little difference (unless however as a result they are then put on under further investigation, which is outside of the scope of this project). Therefore the machine learning model should be optimised to favour producing a higher recall score as mislabelling a legit transaction doesn't have as much consequence.  
+
+## Experimental Results
+
+### Binary classificaion using Multi-layer Perceptron (MLP)
+
+### Comparision to logistical regression model
+
+### Anomaly detection using Autoencoder
+
+### Comparison to dbscan clustering
 
  # References:
  [1] Deep Weakly-supervised Anomaly Detection - Guansong Pang, Chunhua Shen, Huidong Jin, Anton van den Hengel
