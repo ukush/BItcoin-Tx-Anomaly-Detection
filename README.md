@@ -15,9 +15,9 @@ I have been tasked to speicifcally design a model which utlisises a supervised l
 ## Machine Learning Methods
 
 ### Anomaly Detection
-Anomaly detection (AD) is a broad technique which aims to identify data points which deviate from the majoriy of the data. AD can be used in the identification of rare events or observations, where features of these events are significantly different from normal instances. Thus, AD has much practical importance due to it's broad applications in defense against cyber-crimes, fraudulent activity and much more. Machine learning models that aim to detect anomalous data points can be of three main types: unsupervised, semi-supervised and supervised. The correct method depends on the avilability of labels in the dataset.
+Anomaly detection (AD) is a broad technique which aims to identify data points which deviate from the majoriy of the data. AD can be used in the identification of rare events or observations, where features of these events are significantly different from normal instances. Thus, AD has much practical importance due to it's broad applications in defense against cyber-crimes, fraudulent activity and much more. Machine learning models that aim to detect anomalous data points can be of three main types: unsupervised, semi-supervised and supervised. The correct method depends on the availability of labels in the dataset.
 
-Rather than anomaly detection models learn which makes a certain data point abnormal, AD models learn what the 'normal' data points consists of. Consequently, any data points that fall outside of that defined normal, are marked as outliers, or anomalous.
+Rather than anomaly detection models learning what makes a certain data point abnormal, AD models learn what the 'normal' data points consists of. Consequently, any data points that fall outside of that defined normal, are marked as outliers, or anomalous.
 
 ### Fraud Detection
 Fraud detection focuses specifically on identiying fraudulent data points or activities, and is particularly applicable for detecting fraudulent network activity or fraudulent transactions as in the case of credit card fraud. Fraud detection can be treated as anomaly detection or a classification problem, again, depending on the characteristics of the dataset and the goal of the machine learning model. This is particularly useful in cases where fraud patterns are evolving and may not be well-defined.
@@ -25,21 +25,21 @@ Fraud detection focuses specifically on identiying fraudulent data points or act
 ### Binary Classification
 Binary classification is a machine learning technique where the goal is to categorise data points into one of two classes, or categories. It is a broader concept that can include both anomaly detection and fraud detection, but is not limited to these speciic use cases. Binary classification can only be performed when the data has been clearly labled, with data belonging to either class.
 
-#### Deciding on which approach to use
-While there is some overlap between these methods, it is important to choose the correct method in order to get the best results. In order to choose the correct method, I will need to answer the following questions as part of this paper:
+#### Goals of this project
 
-**Choosing a dataset**
-* 1a) What available datasets are there?
-* 1b the dataset labelled?
-* 1c) Does the dataset have appropriate features to allow for efficient training?
-* 1d) Are the boundaries between fraud and legit transactions clearly defined?
+The goal of this project is to explore the various supervised learning methods to tackle the problem of fraud detecction for Bitcoin transactions.
 
-**Applications of the model**
-* 2a) What context could a model like this be used in?
-* 2b) What would the cost of failure to detect a fraudulent transaction be?
-* 2c) Is it worse to mis-label a fraudlent transaction as legit, or mis-label a legit transction as fraudulent?
+In this project, my approach is as follows:
+1. Treat this as a binary classification problem:
+   - Train a binary classifier such as MLP or another form of ANN to predict transactions as either fraudulent or legit using a labelled dataset of known legit and fraud transactions.
+   - I can use some other supervised learning model that has been used in literature such as SVM or a simple logistical regression model to compare my neural network to.
 
-I will attempt to asnwer these questions throughout this paper.
+2. Treat this task as an anomaly detection problem:
+   - Using some supervised learning method, train a model to learn what is a 'normal' or legitimate transaction and then feed data into this model. Fradulent transactions should then be identofied as they will differ from the legit transactions in some metric.
+   - Can use an autoencoder for this
+   - There has been research into Graph Neural Networks (GNN) so could explore that
+   - Other neural network architetures could potentially be used such as RNN
+   - I can then compare the performance of these models to some other out-of-the-box anomaly detection model such as dbscan clustering.
 
 ## Background
 
