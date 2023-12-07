@@ -213,7 +213,17 @@ From this, a number of features of each transaction were gathered:
 * out_and_tx_malicious: Will be 1 if the tx_hash is a malicious transaction or an output of a malicious transaction.
 * all_malicious: Will be 1 if the tx_hash is a malicious transaction or an output of a malicious transaction or input of a malicious transaction.
 
-The dataset is heavily skewed in favour of non-malicious transactions as is often the case with anomaly detection problems; from over 30 million transactions in the dataset, only 108 have been confirmed to be malicious. Thus, common anomaly detection methods will need to be used in order to sufficiently extract meaningful features from the dataset to be used in the training of the machine learning model.
+### Problems with this dataset
+
+#### Imbalanced
+The dataset is heavily skewed in favour of non-malicious transactions as is often the case with anomaly detection problems; from over 30 million transactions in the dataset, only 108 have been confirmed to be malicious. The effects not only the imbalance in the dataset, but also just the sheer lack of fraud samples will make traditional supervised neural network training very difficult.
+
+#### Potential for label noise
+Label noise refers to examples that belong to one class that are assigned to another class. For example, the dataset includes Bitcoin transactions. Given the properties of bitcoin transactions, it is not an unreasonable assumption that there are probbaly many transactions that have been used for fraudulent activities that have not been labelled as such. This label noise can cause problems when trying to classify between the two types of transactions because the model could think it's learning features for a legitimate transaction, but in fact due to a mislabelling (from the human researcher), it is actually learning features from a fraudulent transaction. 
+
+For imbalnced datasets, this can have an even more pronounced effect. Given that examples in the positive class are so few, losing some to noise reduces the amount of information available about the minorty class even further.
+
+Of couse, this is just speculation as we cannot be certain if the dataset includes already mislabled positive or negative samples, but it is something that should be taken into consideration when evaluating the performance of the models.
 
 ## Feature Extraction & Engineering
 
