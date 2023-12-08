@@ -49,11 +49,11 @@ Bitcoin is a decentralised, peer-to-peer money ecosystem which allows participan
 
 In a bitcoin transaction, there is nothing being ‘sent’ per say. Rather, the owner of a certain number of bitcoins specifies who the new owner will be. They first ‘lock’ these funds using a special locking script and a unique digital signature. These funds can now only be unlocked, or spent, by the user that owns a particular key, a key that the old owner specifies. This forms the _output _of a transaction. The outputs of a previous transaction become part of the input to the next transaction when a new owner wants to spend the funds that were sent to them by unlocking the unspent transaction outputs (UTXO) using their special key.
 
-**Anomalous Transactions**
+**Fraudulent Transactions**
 
-**What is an anomalous transaction?**
+**What is an fraudulent transaction?**
 
-An anomalous transaction is one that contains data points which are significantly different from those of a normal transaction. This can come in many forms.** **This paper describes some of the typical types or categories of anomalous transactions:
+An anomalous transaction is one that contains data points which are significantly different from those of a normal transaction. This can come in many forms. This paper describes some of the typical types or categories of anomalous transactions:
 
 **Bitcoin theft**
 
@@ -248,7 +248,11 @@ Recall is the measure of TP divided by the TP plus the false negatives (FN) - de
 
 Depending on the cost, or consequence of getting a prediction wrong (either way), the model should be optimised to produce a high recall or high precision. In cases where the cost of false negatives is very high, meaning classifying a positive class as negative, then recall is the more important metric because missing a potential positive case is worse than mis-identifying negative cases as positive. Optimising for precision on the other hand may be more appropriate in cases when he cost of such failure is low, or to reduce human workload. There are several methods to optimise for precision or recall, the manner in which a threshild is set cn be used to reflect the precision and recall preferences for each specific use case[1].
 
-Another important metric for measuring the performance of fraud detection model is ROC curve (receiver operating characteristic curve). This measures the TP rate divided by the FP rate over many classifying thresholds. ![0_vlaAZ0jKCoihMaI9](https://github.com/ukush/Bitcoin-Tx-Anomaly-Detection/assets/64285005/141f7880-82c8-4306-8a8e-54ee8b412c62). The ROC curve illustrates the trade-off between the recall (TP rate) or how many negative samples the model can correctly identify, and the false positive rate (FP rate) or the rate at which the model incorrectly idetifies a negative sample as being positive, at various thresholds.
+Another important metric for measuring the performance of fraud detection model is ROC curve (receiver operating characteristic curve). This measures the TP rate divided by the FP rate over many classifying thresholds. 
+
+![0_vlaAZ0jKCoihMaI9](https://github.com/ukush/Bitcoin-Tx-Anomaly-Detection/assets/64285005/141f7880-82c8-4306-8a8e-54ee8b412c62) 
+
+The ROC curve illustrates the trade-off between the recall (TP rate) or how many negative samples the model can correctly identify, and the false positive rate (FP rate) or the rate at which the model incorrectly idetifies a negative sample as being positive, at various thresholds.
 
 Finally, there is the AUC metric, or Area Under the Curve. This provides an aggregate measure of performance across all possible thresholds. The AUC is a single scalar value that quantifies the overall performance of a binary classification model as represented by its ROC curve. ![ROC_AUC_plot](https://github.com/ukush/Bitcoin-Tx-Anomaly-Detection/assets/64285005/85a0410d-5e6a-4ef2-b17c-cb6b8bfec80a)
 
