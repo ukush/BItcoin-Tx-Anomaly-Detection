@@ -1,6 +1,8 @@
 # Detecting fraudulent Bitcoin transactions using supervised machine learning methods
 
-### Problem Definition
+
+## 1. Introduction
+### 1.1 Problem Definition
 
 Since the inception of Bitcoin in 2009, there have been concerns with regards to its security and the potential for it to be used in illegal activity, partly due to its pseudo-anonymous properties. Transactions over the Bitcoin network are not directly linked to personal identities, although this can be established through deeper investigation as more often than not, the Bitcoins are purchased using personal bank accounts on centralised exchanges, which often require proof of identity. 
 
@@ -9,20 +11,20 @@ Nevertheless, Bitcoin fraud is still an inevitability. For those who know how to
 Over the last decade, there have been multiple high profile cases of centralised exchanges being hacked, resulting in the leaking of thousands of Bitcoin private keys - which give a user access to their Bitcoin funds. Once leaked, hackers can use these private keys to transfer funds from these addresses to another address, one which only the hackers have the private key for. Since Bitcoin transactions are non-reversible, there is no way for customers to retrieve their funds.
 The aim of this project is to develop a machine learning model which can identify fraudulent Bitcoin transactions.
 
-## Machine Learning Methods
+### 1.2 Machine Learning Methods
 
-#### Anomaly Detection
+#### 1.2.1 Anomaly Detection
 Anomaly detection (AD) is a broad technique which aims to identify data points which deviate from the majoriy of the data. AD can be used in the identification of rare events or observations, where features of these events are significantly different from normal instances. Thus, AD has much practical importance due to it's broad applications in defense against cyber-crimes, fraudulent activity and much more. Machine learning models that aim to detect anomalous data points can be of three main types: unsupervised, semi-supervised and supervised. The correct method depends on the availability of labels in the dataset.
 
 Rather than anomaly detection models learning what makes a certain data point abnormal, AD models learn what the 'normal' data points consists of. Consequently, any data points that fall outside of that defined normal, are marked as outliers, or anomalous.
 
-#### Fraud Detection
+#### 1.2.2 Fraud Detection
 Fraud detection focuses specifically on identiying fraudulent data points or activities, and is particularly applicable for detecting fraudulent network activity or fraudulent transactions as in the case of credit card fraud. Fraud detection can be treated as anomaly detection or a classification problem, again, depending on the characteristics of the dataset and the goal of the machine learning model. This is particularly useful in cases where fraud patterns are evolving and may not be well-defined.
 
-#### Binary Classification
+#### 1.2.3 Binary Classification
 Binary classification is a machine learning technique where the goal is to categorise data points into one of two classes, or categories. It is a broader concept that can include both anomaly detection and fraud detection, but is not limited to these speciic use cases. Binary classification can only be performed when the data has been clearly labled, with data belonging to either class.
 
-## Assumptions and goals
+### 1.3 Assumptions and goals
 The goal of this project is to explore the various supervised learning methods to tackle the problem of fraud detecction for Bitcoin transactions. Supervised learning models require the data to be labelled and due to the fact that fraudulent transactions are far more rare when compared with legitimate transactions, it is extermely likely that avaiable datasets will be heavilty skewed in favour of legit transactions, where instances of known fraudulent transactions will be very limited in number. This will pose a significant challenge and so steps will need to be taken to address this challenge.
 
 There are two ways I can approach this problem:
@@ -37,32 +39,32 @@ There are two ways I can approach this problem:
    - Other neural network architetures could potentially be used such as RNN
    - I can then compare the performance of these models to some other out-of-the-box anomaly detection model such as dbscan clustering.
 
-## Background
+## 2. Background
 
-**Bitcoin**
+### 2.1 Bitcoin
 
 Bitcoin is a decentralised, peer-to-peer money ecosystem which allows participants to send and receive value using nothing more than a computer and an internet connection. In the Bitcoin network, transactions are made directly between participants, without the need for a middle-man. Bitcoin transactions are final and cannot be reversed. It is therefore extremely important that users are always in control of the bitcoins they own. This ownership is proven through special ‘keys’ which allow the owners to ‘unlock’ bitcoin funds which have been sent to them. Therefore, whoever controls the keys, controls the bitcoins. 
 
-**Transaction Inputs and outputs**
+**2.1.1 Transaction Inputs and outputs**
 
 ![Overview of Bitcoin Transaction Inputs and Outputs](https://en.bitcoin.it/w/images/en/f/f1/Bitcointransactions.JPG)
 
 In a bitcoin transaction, there is nothing being ‘sent’ per say. Rather, the owner of a certain number of bitcoins specifies who the new owner will be. They first ‘lock’ these funds using a special locking script and a unique digital signature. These funds can now only be unlocked, or spent, by the user that owns a particular key, a key that the old owner specifies. This forms the _output _of a transaction. The outputs of a previous transaction become part of the input to the next transaction when a new owner wants to spend the funds that were sent to them by unlocking the unspent transaction outputs (UTXO) using their special key.
 
-**Fraudulent Transactions**
+### 2.2 Fraudulent Transactions
 
 **What is an fraudulent transaction?**
 
 An anomalous transaction is one that contains data points which are significantly different from those of a normal transaction. This can come in many forms. This paper describes some of the typical types or categories of anomalous transactions:
 
-**Bitcoin theft**
+**2.2.1 Bitcoin theft**
 
 This usually occurs when a malicious actor gains access to a victim’s private key, giving them complete control over the Bitcoin funds in the victim’s wallet. This can be a result of a breach or hack of a centralised cryptocurrency exchange in which the user's information is leaked; or it can be a result of a scam where victims are tricked into giving scammers access to their wallets voluntarily. Regardless of the method of acquisition, these types of thefts have some common patterns.
 
 * Victim’s wallet is quickly emptied, with all funds being transferred to the thief’s wallet in a **single transaction output**.
 * Fraudulent transactions may involve **abnormal fees in relation to the transaction amount. **Miners will prioritise transactions with large fees and so those trying to transfer stolen funds as quickly as possible may introduce large fees for these transactions.
 
-**Laundering or other malicious activities**
+**2.2.2 Laundering or other malicious activities**
 
 As mentioned, Bitcoin is a better digital currency alternative than traditional currencies to use for illegal activities because of the pseudo-anonymity it provides, as well as its peer-to-peer nature. Thus, it is used by criminal, drug cartels and crime syndicates for cross-border transactions for purposes of laundering illegal money. It is worth noting that there are far better cryptocurrencies for this purpose such as privacy coins like Monero, where transactions are completely untraceable and anonymous; however Bitcoin is still used for illegal activities due to its popularity in relation to other cryptocurrencies. 
 
@@ -72,11 +74,11 @@ Pattern of money laundering may include:
 * Thief's may try to mask their actions by making **numerous, smaller transaction outputs** **in a short space of time** in an attempt to confuse the victim and authorities
 * Making transactions at **unusual times of the day** to avoid detection.
 
-**Crypto Ransom & Extortion**
+**2.2.3 Crypto Ransom & Extortion**
 
 **Bitcoin is also a popular currency for **perpetrators of ransoms and exploitation. A characteristic of these types of crimes are that criminals will often force victims to make a** single or a few large transactions to a single address** or potentially make smaller, **more numerous transactions to different addresses**, again in order to confuse investigators after the fact.
 
-**Network Attacks**
+**2.2.4 Network Attacks**
 
 Cybercriminals may try to attack the Bitcoin network in an attempt to disrupt the normal functioning or exploit vulnerabilities in transaction processing, by making malicious transactions. Patterns may include:
 
@@ -158,44 +160,42 @@ Therefore, the machine learning model should be able to learn from these transac
 
 While these can be indicative of suspicious activities, it's important to note that these characteristics are not definitive proof of malicious intent, and legitimate transactions might exhibit similar patterns. Nevertheless, these markers can be useful for flagging transactions for further investigation and will be the focus of this project.
 
-**Problems with this description**
+### 2.3 Problems with this description
 
 An issue with categorising malicious activity using transaction markers is that there will undoubtedly be scenarios where the characteristics described may be associated with normal transaction behaviour:
 
-**Numerous Small Transactions:**
+**2.3.1 Numerous Small Transactions:**
 
 * Microtransactions: Some businesses or applications rely on microtransactions, where small amounts of cryptocurrency are transferred frequently. This is common in gaming or content platforms.
 * Dollar-Cost Averaging: Investors might engage in dollar-cost averaging, making frequent small purchases of cryptocurrency over time.
 
-**Higher Fees:**
+**2.3.2 Higher Fees:**
 
 * Urgency or Priority Transactions: Users might intentionally choose higher fees to ensure quicker confirmation times for their transactions, especially during periods of network congestion.
 * Complex Smart Contract Execution: Certain transactions involving complex smart contracts or advanced features may require higher fees.
 
-**Large Outputs to Single Address:**
+**2.3.3 Large Outputs to Single Address:**
 
 * Exchange Withdrawals: When users withdraw funds from a cryptocurrency exchange, a large output to a single address is common.
 * Business Transactions: Large payments between businesses or entities can result in a single, large output.
 
-**Numerous Small Outputs to Multiple Addresses:**
+**2.3.4 Numerous Small Outputs to Multiple Addresses:**
 
 * Payment Splitting: In a business context, payments might be split into numerous smaller outputs to distribute funds among multiple recipients.
 * Wallet Shuffling: Some users intentionally split their funds into smaller amounts and distribute them across multiple addresses for privacy reasons.
 
-**Late Hours of the Day:**
+**2.3.5 Late Hours of the Day:**
 
 * Global Nature of Cryptocurrency Markets: Participants in cryptocurrency markets are distributed globally, leading to transactions occurring at various times, including late hours.
 
 Regardless, the transaction markers described can still provide a useful indication of potential suspicious or malicious activity.
 
 
-## Dataset Description
+## 3. Dataset Description
 
 This project uses the [Bitcoin Network Transactional Metadata dataset](https://www.kaggle.com/datasets/omershafiq/bitcoin-network-transactional-metadata/data) published by _Omar Shafiq_. The dataset was created for research on blockchain anomaly and fraud detection and consists of a directed-acyclic graph (DAG) which was created from the bitcoin network transaction data from 2011-2013.
 
-
 ![](https://www.googleapis.com/download/storage/v1/b/kaggle-user-content/o/inbox%2F750990%2Fcb02209b063d6521f834feb05fc852d0%2FScreenshot%202019-11-23%20at%208.51.27%20PM.png?generation=1574535111225673&alt=media)
-
 
 From this, a number of features of each transaction were gathered:
 
@@ -213,19 +213,19 @@ From this, a number of features of each transaction were gathered:
 * out_and_tx_malicious: Will be 1 if the tx_hash is a malicious transaction or an output of a malicious transaction.
 * all_malicious: Will be 1 if the tx_hash is a malicious transaction or an output of a malicious transaction or input of a malicious transaction.
 
-### Problems with this dataset
+### 3.1 Problems with this dataset
 
-#### Imbalanced
+**3.1.1 Imbalanced**
 The dataset is heavily skewed in favour of non-malicious transactions as is often the case with anomaly detection problems; from over 30 million transactions in the dataset, only 108 have been confirmed to be malicious. The effects not only the imbalance in the dataset, but also just the sheer lack of fraud samples will make traditional supervised neural network training very difficult.
 
-#### Potential for label noise
+**3.1.3 Potential for label noise**
 Label noise refers to examples that belong to one class that are assigned to another class. For example, the dataset includes Bitcoin transactions. Given the properties of bitcoin transactions, it is not an unreasonable assumption that there are probbaly many transactions that have been used for fraudulent activities that have not been labelled as such. This label noise can cause problems when trying to classify between the two types of transactions because the model could think it's learning features for a legitimate transaction, but in fact due to a mislabelling (from the human researcher), it is actually learning features from a fraudulent transaction. 
 
 For imbalnced datasets, this can have an even more pronounced effect. Given that examples in the positive class are so few, losing some to noise reduces the amount of information available about the minorty class even further.
 
 Of couse, this is just speculation as we cannot be certain if the dataset includes already mislabled positive or negative samples, but it is something that should be taken into consideration when evaluating the performance of the models.
 
-## Feature Extraction & Engineering
+## 4. Feature Extraction & Engineering
 
 In order to create an appropriate dataset to use in training, I chose to use a random sample of around 10000 non-malicious transaction data from the original dataset and combined them with all 108 malicious transactions to form the experimental dataset.
 
@@ -239,7 +239,7 @@ To further add meaningful data which the machine learning model will learn from,
 
 * sat_per_byte (the transaction fee per byte of the transaction - indicates how relatively ‘expensive’ the transaction is)
 
-## Evaluating the Models
+## 5. Evaluating the Models
 
 Accuracy is not an appropriate metric for evaluating fraud detection models because it does not fully represent the true performance of the model's predictive capabilities. Take for example a dataset consisting of 1000 transactions, 950 of which are legitimate, whilst 50 being fraudulent. A binary classification model that classifies all transactions as legitimate can achieve a accuracy score of 95% for the entire dataset inspite of having an accuracy of 0% for fraudulent transactions!
 
@@ -264,16 +264,16 @@ All of these will be utilised to measure the performance of all my models in thi
 
 For this project, we will say that the cost of missing a fraudulent transaction is moderate/high but not *extremely* high while the cost of mislabelling a legit transaction as fraudulent as relatively low. Why? Because once a Bitcoin transaction is confirmed by the network, it cannot be stopped regardless of whether it is used for fraudulent activity or not. Classification of fraudulent Bitcoin transactions is only useful *after the fact* and so such algorithms would most likely be used as an aid to help in human investigation into fraudulent activities involving Bitcoin, rather than being deployed as a preventative measure. Further, by labelling a legitimate transaction as fraudulent, the sender of the Bitcoin is not affected in any way since the flagging og their transaction is made outside of the Bitcoin network and so as far as theu're concerned, it little difference (unless however as a result they are then put on under further investigation, which is outside of the scope of this project). Therefore the machine learning model should be optimised to favour producing a higher recall score as mislabelling a legit transaction doesn't have as much consequence.  
 
-## Experimental Results
+## 6. Experimental Results
 
-### Binary classificaion using Multi-layer Perceptron (MLP)
+### 6.1 Binary classificaion using Multi-layer Perceptron (MLP)
 
-### Comparision to logistical regression model
+### 6.2 Comparision to logistical regression model
 
-### Anomaly detection using Autoencoder
+### 6.3 Anomaly detection using Autoencoder
 
-### Comparison to dbscan clustering
+### 6.4 Comparison to dbscan clustering
 
- # References:
+## 7. References:
  [1] Deep Weakly-supervised Anomaly Detection - Guansong Pang, Chunhua Shen, Huidong Jin, Anton van den Hengel
  [1] Deep Learning for Anomaly Detection (https://ff12.fastforwardlabs.com/)
