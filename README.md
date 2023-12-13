@@ -250,11 +250,9 @@ Depending on the cost, or consequence of getting a prediction wrong (either way)
 
 Another important metric for measuring the performance of fraud detection model is ROC curve (receiver operating characteristic curve). This measures the TP rate divided by the FP rate over many classifying thresholds. 
 
-![0_vlaAZ0jKCoihMaI9](https://github.com/ukush/Bitcoin-Tx-Anomaly-Detection/assets/64285005/141f7880-82c8-4306-8a8e-54ee8b412c62) 
-
 The ROC curve illustrates the trade-off between the recall (TP rate) or how many negative samples the model can correctly identify, and the false positive rate (FP rate) or the rate at which the model incorrectly idetifies a negative sample as being positive, at various thresholds.
 
-Finally, there is the AUC metric, or Area Under the Curve. This provides an aggregate measure of performance across all possible thresholds. The AUC is a single scalar value that quantifies the overall performance of a binary classification model as represented by its ROC curve. ![ROC_AUC_plot](https://github.com/ukush/Bitcoin-Tx-Anomaly-Detection/assets/64285005/85a0410d-5e6a-4ef2-b17c-cb6b8bfec80a)
+Finally, there is the AUC metric, or Area Under the Curve. This provides an aggregate measure of performance across all possible thresholds. The AUC is a single scalar value that quantifies the overall performance of a binary classification model as represented by its ROC curve.
 
 All of these will be utilised to measure the performance of all my models in this project.
 
@@ -265,15 +263,34 @@ All of these will be utilised to measure the performance of all my models in thi
 For this project, we will say that the cost of missing a fraudulent transaction is moderate/high but not *extremely* high while the cost of mislabelling a legit transaction as fraudulent as relatively low. Why? Because once a Bitcoin transaction is confirmed by the network, it cannot be stopped regardless of whether it is used for fraudulent activity or not. Classification of fraudulent Bitcoin transactions is only useful *after the fact* and so such algorithms would most likely be used as an aid to help in human investigation into fraudulent activities involving Bitcoin, rather than being deployed as a preventative measure. Further, by labelling a legitimate transaction as fraudulent, the sender of the Bitcoin is not affected in any way since the flagging og their transaction is made outside of the Bitcoin network and so as far as theu're concerned, it little difference (unless however as a result they are then put on under further investigation, which is outside of the scope of this project). Therefore the machine learning model should be optimised to favour producing a higher recall score as mislabelling a legit transaction doesn't have as much consequence.  
 
 ## 6. Experimental Results
+For this project, 2 supervised (MLP and Autoencoder) and 2 unsupervised methods (Isolation forest and DBSCAN) were used to detect fraudulent transactions.
 
-### 6.1 Binary classificaion using Multi-layer Perceptron (MLP)
+MLP:
+The model with the best f1 score was trained on sythetically oversampled minority data, resulting in an f1 of 30%. However, there was arguably a better model in which although the f1 score was 17%, the recall was much higher (82%) compared with only 45%.
 
-### 6.2 Comparision to logistical regression model
+Autoencoder:
+The autoencoders were trained on legitimate transactions only. The idea is that the autoencoder will learn from these legitimate transactions and get good at reconstructing legitimate transactions from the latent code to produce a low reconstruction error. When the autoencoder encounters a fraudulent transcation, the reconstruction error should be significantly larger - indicating an anomalous or fraudulent transaction.
 
-### 6.3 Anomaly detection using Autoencoder
+The experimental results did not produce any applicable results, with the highest recall being only 23% for the best experiment.
 
-### 6.4 Comparison to dbscan clustering
+Isolation Forest:
+Isolation forest produced teh highest f1 score of all experiments (56%), indicating a balance between precision and recall. Despite this, the MLP experiment producing f1 of 17% can be seen as better for fraud detetcion as it produced 82% recall compared with only 57% of this isolation forest model.
+
+DBSCAN:
+DBSCAN model was only able to successfully identify 1/108 fraud transactions and did not produce any significant results
+
+## 7. Further Work
+Due to the time and spec limitations, there are many things that I would like to explore in the future. Firstly, work can be done in the feature engineering section. As seen in other work on this topic, features such as time intervals between receiving and spending transactions could provide the model with more accurate features to learn from. Also, the dataset contained fraudulent transactions from between 2011-2013. If more data is available, there will be a much larger pool of fraudulent transactions and since these fraud transactions do not always have a common structure, it may help get better results.
+
+Further, I would introduce a standardised research experiment metholdology. i.e. make sure all experiments are carried out in a set method by keeping all variables the same, just changing the model used.
+
+## 8. Conclusions
+In this study, I focused on the detection of Bitcoin fraud transactions using supervised machine learning methods. I collected historical Bitcoin transaction data and extracted 11 features based on the characteristics of fraud transactions. I used two supervised methods—the MLP and Autoencoder methods to classify the features. The experimental results showed that the MLP have better classification abilities than the other approaches. Further, I performed oversampling to equalize the unbalanced training set. The experiments showed that the recall was further improved by equalization.
+
+My next research directions include two aspects: (1) extracting more targeted features for theft transactions and combining multiple machine learning algorithms to improve the detection results and (2) exploring graph based neural network architectures.
+
 
 ## 7. References:
- [1] Deep Weakly-supervised Anomaly Detection - Guansong Pang, Chunhua Shen, Huidong Jin, Anton van den Hengel
- [1] Deep Learning for Anomaly Detection (https://ff12.fastforwardlabs.com/)
+ - Deep Weakly-supervised Anomaly Detection - Guansong Pang, Chunhua Shen, Huidong Jin, Anton van den Hengel
+ - Deep Learning for Anomaly Detection (https://ff12.fastforwardlabs.com/)
+ - Binjie Chen, Fushan Wei, Chunxiang Gu, "Bitcoin Theft Detection Based on Supervised Machine Learning Algorithms", Security and Communication Networks, vol. 2021, Article ID 6643763, 10 pages, 2021. https://doi.org/10.1155/2021/6643763
