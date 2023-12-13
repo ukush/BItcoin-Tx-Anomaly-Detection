@@ -290,7 +290,10 @@ In this study, I focused on the detection of Bitcoin fraud transactions using su
 My next research directions include two aspects: (1) extracting more targeted features for theft transactions and combining multiple machine learning algorithms to improve the detection results and (2) exploring graph based neural network architectures.
 
 
-## 7. References:
- - Deep Weakly-supervised Anomaly Detection - Guansong Pang, Chunhua Shen, Huidong Jin, Anton van den Hengel
- - Deep Learning for Anomaly Detection (https://ff12.fastforwardlabs.com/)
- - Binjie Chen, Fushan Wei, Chunxiang Gu, "Bitcoin Theft Detection Based on Supervised Machine Learning Algorithms", Security and Communication Networks, vol. 2021, Article ID 6643763, 10 pages, 2021. https://doi.org/10.1155/2021/6643763
+## 7. References: 
+ - Pang, G., Shen, C., Jin, H., & Hengel, A. van den. (2023, June 5). Deep Weakly-supervised Anomaly Detection. ArXiv.org. https://doi.org/10.48550/arXiv.1910.13601
+ - Deep Learning for Anomaly Detection. (n.d.). Ff12.Fastforwardlabs.com. https://ff12.fastforwardlabs.com/
+ - Chen, B., Wei, F., & Gu, C. (2021). Bitcoin Theft Detection Based on Supervised Machine Learning Algorithms. Security and Communication Networks, 2021, 1–10. https://doi.org/10.1155/2021/6643763
+ - Shafiq, O. (2019). ANOMALY DETECTION IN BLOCKCHAIN.
+ - Omer Shafiq. (2019). Bitcoin Hacked Transactions 2010-2013. IEEE Dataport. https://dx.doi.org/10.21227/7f0c-df28
+ - Bitcoin Network Transactional Metadata. (n.d.). Www.kaggle.com. Retrieved December 13, 2023, from https://www.kaggle.com/datasets/omershafiq/bitcoin-network-transactional-metadata
